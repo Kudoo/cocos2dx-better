@@ -557,6 +557,27 @@ public:
     
     /// get app version name
     static string getAppVersion();
+    
+    /// get device type
+    static string getDeviceType();
+    
+    /**
+     * get system version nubmer
+     *
+     * \note
+     * for iOS, it convert system major version int
+     * for Android, it returns Build.VERSION.SDK_INT
+     * for Mac, it returns 0
+     */
+    static int getSystemVersionInt();
+    
+    /**
+     * get mac address, if failed, return 00:00:00:00:00:00. 
+     * 
+     * \note
+     * for iOS 7.0+, you can't get mac address
+     */
+    static string getMacAddress();
 	
 #if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
 	/// get JNIEnv

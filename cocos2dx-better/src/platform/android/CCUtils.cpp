@@ -30,12 +30,6 @@
 #include "CCMD5.h"
 #include "CCMoreMacros.h"
 
-// built-in strings
-#define S_CANCEL_EN "Cancel"
-#define S_CANCEL_ZH "取消"
-#define S_OK_EN "OK"
-#define S_OK_ZH "确定"
-
 bool CCUtils::deleteFile(const string& path) {
 	return unlink(path.c_str()) == 0;
 }
@@ -602,6 +596,33 @@ string CCUtils::getAppVersion() {
     t.env->DeleteLocalRef(jPN);
     
     return ver;
+}
+
+string CCUtils::getDeviceType() {
+	JniMethodInfo t;
+    JniHelper::getStaticMethodInfo(t, "org/cocos2dx/lib/CCUtils", "getDeviceType", "()Ljava/lang/String;");
+	jstring jDevice = (jstring)t.env->CallStaticObjectMethod(t.classID, t.methodID);
+	string device = JniHelper::jstring2string(jDevice);
+	t.env->DeleteLocalRef(jDevice);
+	return device;
+}
+
+string CCUtils::getMacAddress() {
+	JniMethodInfo t;
+    JniHelper::getStaticMethodInfo(t, "org/cocos2dx/lib/CCUtils", "getMacAddress", "()Ljava/lang/String;");
+	jstring jMac = (jstring)t.env->CallStaticObjectMethod(t.classID, t.methodID);
+	string mac = JniHelper::jstring2string(jMac);
+	t.env->DeleteLocalRef(jMac);
+	return mac;
+}
+
+int CCUtils::getSystemVersionInt() {
+	JNIEnv* env = getJNIEnv();
+	jclass clazz = env->FindClass("android/os/Build$VERSION");
+	jfieldID fid = env->GetStaticFieldID(clazz, "SDK_INT", "I");
+	int v = env->GetStaticIntField(clazz, fid);
+	env->DeleteLocalRef(clazz);
+	return v;
 }
 
 #endif // #if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID

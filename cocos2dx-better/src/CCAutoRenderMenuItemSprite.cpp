@@ -137,8 +137,9 @@ void CCAutoRenderMenuItemSprite::centerAlignImages() {
 }
 
 void CCAutoRenderMenuItemSprite::selected() {
-	CCMenuItemSprite::selected();
+    CCMenuItemSprite::selected();
     updateImagesVisibility();
+	CCMenuItemSprite::selected();
 	
 	// set a darker color
 	if(!getSelectedImage()) {
@@ -156,7 +157,7 @@ void CCAutoRenderMenuItemSprite::selected() {
 }
 
 void CCAutoRenderMenuItemSprite::unselected() {
-	CCMenuItemSprite::unselected();
+    CCMenuItemSprite::unselected();
     updateImagesVisibility();
 	
 	// restore old color
